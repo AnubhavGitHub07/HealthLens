@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏥 MediChat Pro
+# 🏥 HealthLens
 
 ### AI-Powered Medical Report Analyzer
 
@@ -32,7 +32,7 @@
 
 ## 💡 Solution
 
-**MediChat Pro** bridges the gap between complex medical data and patient understanding. Users simply upload their medical report, and our AI-powered system delivers:
+**HealthLens** bridges the gap between complex medical data and patient understanding. Users simply upload their medical report, and our AI-powered system delivers:
 
 - 🔍 **Plain-language explanations** of every finding
 - ⚠️ **Risk assessments** with color-coded severity levels
@@ -206,7 +206,7 @@ GET /api/health
 ```json
 {
   "status": "ok",
-  "message": "MediChat Pro API is running",
+  "message": "HealthLens API is running",
   "timestamp": "2026-04-03T12:00:00.000Z"
 }
 ```
@@ -329,7 +329,7 @@ vercel --prod
 
 ## 🧠 How Gemini AI is Used
 
-| Capability | Application in MediChat Pro |
+| Capability | Application in HealthLens |
 |------------|---------------------------|
 | **Text Understanding** | Extracts and interprets medical values, terminology, and reference ranges |
 | **Advanced Reasoning** | Analyzes medical data contextually — correlates findings, identifies patterns |
@@ -403,7 +403,7 @@ Built with ❤️ for HackDays 2026
 
 ### ⚠️ Medical Disclaimer
 
-*MediChat Pro is designed for **informational purposes only**. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with questions regarding a medical condition.*
+*HealthLens is designed for **informational purposes only**. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider with questions regarding a medical condition.*
 
 ---
 
