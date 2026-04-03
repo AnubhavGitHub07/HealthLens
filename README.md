@@ -89,7 +89,7 @@ cp .env.example .env
 Edit the `.env` file:
 ```env
 GEMINI_API_KEY=your_actual_gemini_api_key_here
-PORT=5000
+PORT=5001
 ```
 
 ```bash
@@ -97,7 +97,7 @@ PORT=5000
 npm run dev
 ```
 
-The backend will start on **http://localhost:5000**
+The backend will start on **http://localhost:5001**
 
 ### 3. Frontend Setup
 
