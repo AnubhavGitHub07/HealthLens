@@ -76,7 +76,7 @@ cd HealthLens
 
 ```bash
 # Navigate to backend
-cd medichat-backend
+cd backend
 
 # Install dependencies
 npm install
@@ -103,7 +103,7 @@ The backend will start on **http://localhost:5001**
 
 ```bash
 # Open a new terminal, navigate to frontend
-cd medichat-frontend
+cd frontend
 
 # Install dependencies
 npm install
