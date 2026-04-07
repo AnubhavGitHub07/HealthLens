@@ -28,7 +28,7 @@ Edit `.env` with your configuration:
 
 ```env
 # Server Configuration
-PORT=5000
+PORT=5001
 NODE_ENV=development
 
 # Database Configuration
@@ -90,11 +90,11 @@ mkdir -p uploads
 npm run dev
 ```
 
-The server will start on `http://localhost:5000`
+The server will start on `http://localhost:5001`
 
 You should see:
 ```
-Server running on port 5000
+Server running on port 5001
 Connected to MongoDB
 ```
 
@@ -453,7 +453,7 @@ Set `NODE_ENV=development` for:
 ```
 Frontend (React)           Backend (Express)        Database (MongoDB)
     ↓                          ↓                           ↓
-localhost:5173          localhost:5000          localhost:27017
+localhost:5173          localhost:5001              localhost:27017
     │                          │                           │
     │──── HTTP Requests ──→    │                           │
     │                          │──── Query/Update ────→    │
@@ -485,4 +485,4 @@ localhost:5173          localhost:5000          localhost:27017
 
 ---
 
-Last updated: January 2024
+Last updated: January 2026

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './../../styles/LandingPage.css';
 
 export default function LandingPage() {
@@ -102,10 +103,10 @@ export default function LandingPage() {
       <nav id="nav">
         <div className="container">
           <div className="nav-inner">
-            <a href="#" className="nav-logo">
+            <Link to="/" className="nav-logo">
               <div className="nav-logo-icon">H</div>
               <span className="nav-logo-text">Health Lens</span>
-            </a>
+            </Link>
             <div className="nav-links">
               <a href="#features">Features</a>
               <a href="#how">How It Works</a>
@@ -116,9 +117,9 @@ export default function LandingPage() {
               <a href="#" className="nav-signin">
                 Sign In
               </a>
-              <a href="#" className="btn btn-primary" style={{ padding: '10px 22px', fontSize: '14px' }}>
+              <Link to="/upload" className="btn btn-primary" style={{ padding: '10px 22px', fontSize: '14px' }}>
                 Get Started Free
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -142,14 +143,14 @@ export default function LandingPage() {
                 Upload any medical report, lab result, or prescription. Our AI decodes the jargon, highlights risks, and gives you a clear picture of your health — in seconds.
               </p>
               <div className="hero-actions reveal reveal-delay-3">
-                <a href="#" className="btn btn-primary btn-lg">
+                <Link to="/upload" className="btn btn-primary btn-lg">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                     <polyline points="17 8 12 3 7 8" />
                     <line x1="12" y1="3" x2="12" y2="15" />
                   </svg>
                   Upload Your Report
-                </a>
+                </Link>
                 <a href="#demo" className="btn btn-ghost btn-lg">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10" />
@@ -787,12 +788,12 @@ export default function LandingPage() {
         <div className="container">
           <div className="footer-inner">
             <div>
-              <a href="#" className="nav-logo" style={{ textDecoration: 'none' }}>
+              <Link to="/" className="nav-logo" style={{ textDecoration: 'none' }}>
                 <div className="nav-logo-icon">H</div>
                 <span className="nav-logo-text" style={{ color: '#fff', fontSize: '18px' }}>
                   Health Lens
                 </span>
-              </a>
+              </Link>
               <div className="footer-brand-desc">
                 AI-powered medical report analysis that makes healthcare understandable for everyone.
               </div>
@@ -800,10 +801,10 @@ export default function LandingPage() {
             <div>
               <div className="footer-heading">Product</div>
               <div className="footer-links">
-                <a href="#">Dashboard</a>
-                <a href="#">Upload Report</a>
-                <a href="#">Report History</a>
-                <a href="#">AI Assistant</a>
+                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/upload">Upload Report</Link>
+                <Link to="/history">Report History</Link>
+                <Link to="/chat">AI Assistant</Link>
                 <a href="#">Pricing</a>
               </div>
             </div>
