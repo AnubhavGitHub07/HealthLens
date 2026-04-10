@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import path from "path";
 
-// Load .env file from the root directory
-dotenv.config({ path: path.join(__dirname, "../.env") });
+// Load .env file from the backend root directory
+dotenv.config({ path: path.join(process.cwd(), ".env") });
 
 import express from "express";
 import cors from "cors";

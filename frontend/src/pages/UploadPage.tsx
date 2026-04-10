@@ -62,8 +62,14 @@ const UploadPage = () => {
     }
   };
 
+  const handleNewAnalysis = () => {
+    setResult(null);
+    setFile(null);
+    setError("");
+  };
+
   if (result) {
-    return <AnalysisResult data={result} />;
+    return <AnalysisResult data={result} onNewAnalysis={handleNewAnalysis} />;
   }
 
   return (
