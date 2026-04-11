@@ -5,9 +5,9 @@ import { extractTextFromPDF } from "../utils/pdfExtractor";
 import path from "path";
 import { analyzeMedicalReport } from "../utils/geminiAnalyzer";
 import fs from "fs";
-
-
-
+import { saveReport, getReportsByUser, getLatestReport } from "../services/reportService";
+import { getReportsForComparison, compareReports } from "../services/comparisonService";
+import authMiddleware from "../middleware/auth";
 
 const router = express.Router();
 
@@ -106,8 +106,8 @@ router.post("/extract-text", (req: any, res: any, next: any) => {
   });
 });
 
-// POST /api/analyze - Full analysis: Extract text + AI analysis
-router.post("/analyze", (req: any, res: any, next: any) => {
+// POST /api/analyze - Full analysis: Extract text + AI analysis (PROTECTED)
+router.post("/analyze", authMiddleware, (req: any, res: any, next: any) => {
   upload(req, res, async (err: any) => {
     const filePath = req.file ? path.join(process.cwd(), `uploads/${req.file.filename}`) : null;
     
@@ -147,10 +147,37 @@ router.post("/analyze", (req: any, res: any, next: any) => {
 
       const analysis = await analyzeMedicalReport(limitedText);
 
+      // Sanitize: Gemini sometimes returns objects instead of strings in arrays
+      const flattenItem = (item: any): string => {
+        if (typeof item === "string") return item;
+        if (typeof item === "object" && item !== null) {
+          return Object.values(item).join(" — ");
+        }
+        return String(item);
+      };
+
+      const sanitizedAnalysis = {
+        summary: typeof analysis.summary === "string" ? analysis.summary : String(analysis.summary),
+        findings: (analysis.findings || []).map(flattenItem),
+        concerns: (analysis.concerns || []).map(flattenItem),
+        suggestions: (analysis.suggestions || []).map(flattenItem),
+      };
+
+      // Save report to MongoDB
+      const savedReport = await saveReport(
+        req.user.id,
+        req.file.originalname,
+        sanitizedAnalysis,
+        limitedText
+      );
+
+      console.log(`📄 Report saved with ID: ${savedReport._id}`);
+
       res.status(200).json({
         success: true,
         message: "Analysis complete ✅",
-        analysis,
+        analysis: sanitizedAnalysis,
+        reportId: savedReport._id,
         stats: {
           originalTextLength: extractedText.length,
           processedTextLength: limitedText.length
@@ -175,6 +202,88 @@ router.post("/analyze", (req: any, res: any, next: any) => {
       }
     }
   });
+});
+
+// GET /api/reports - Get all reports for a user (PROTECTED)
+router.get("/reports", authMiddleware, async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+    const reports = await getReportsByUser(userId);
+
+    res.status(200).json({
+      success: true,
+      count: reports.length,
+      reports,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Error fetching reports",
+    });
+  }
+});
+
+// GET /api/reports/latest - Get the latest report for a user (PROTECTED)
+router.get("/reports/latest", authMiddleware, async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+    const report = await getLatestReport(userId);
+
+    if (!report) {
+      return res.status(404).json({
+        success: false,
+        message: "No reports found for this user",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      report,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Error fetching latest report",
+    });
+  }
+});
+
+// GET /api/reports/compare - Compare latest two reports (PROTECTED)
+router.get("/reports/compare", authMiddleware, async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+    const { latest, previous } = await getReportsForComparison(userId);
+
+    if (!latest) {
+      return res.status(404).json({
+        success: false,
+        message: "No reports found. Upload at least one report first.",
+      });
+    }
+
+    if (!previous) {
+      return res.status(200).json({
+        success: true,
+        message: "Only one report found. Upload another report to see comparison.",
+        comparison: null,
+        reportsCount: 1,
+      });
+    }
+
+    const comparison = await compareReports(latest, previous);
+
+    res.status(200).json({
+      success: true,
+      comparison,
+      latestReportDate: latest.createdAt,
+      previousReportDate: previous.createdAt,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Error comparing reports",
+    });
+  }
 });
 
 export default router;

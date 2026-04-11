@@ -5,6 +5,7 @@ import UploadZone from "../components/custom/UploadZone";
 import AnalysisResult from "../components/custom/AnalysisResult";
 import type { AnalysisResponse } from "../types/analysis";
 import { Clock, Lock, Zap } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import "../styles/UploadPage.css";
 
 interface ApiErrorResponse {
@@ -17,6 +18,7 @@ const UploadPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [result, setResult] = useState<AnalysisResponse | null>(null);
   const [error, setError] = useState<string>("");
+  const { token } = useAuth();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -45,6 +47,7 @@ const UploadPage = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
           },
         }
       );

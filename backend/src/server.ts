@@ -7,12 +7,17 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 import express from "express";
 import cors from "cors";
 import analysisRoutes from "./routes/analysis";
+import authRoutes from "./routes/auth";
+import chatRoutes from "./routes/chat";
+import connectDB from "./config/database";
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRoutes);
 app.use("/api", analysisRoutes);
 
 // Port
@@ -26,7 +31,9 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+// Connect to MongoDB, then start server
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
 });

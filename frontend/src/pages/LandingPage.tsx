@@ -114,9 +114,9 @@ export default function LandingPage() {
               <a href="#demo">Demo</a>
             </div>
             <div className="nav-cta">
-              <a href="#" className="nav-signin">
+              <Link to="/login" className="nav-signin">
                 Sign In
-              </a>
+              </Link>
               <Link to="/upload" className="btn btn-primary" style={{ padding: '10px 22px', fontSize: '14px' }}>
                 Get Started Free
               </Link>
@@ -190,14 +190,14 @@ export default function LandingPage() {
             <div className="hero-visual reveal reveal-delay-2">
               {/* Floating mini cards */}
               <div className="float-card float-card-2">
-                <div className="float-icon" style={{ background: 'rgba(0,200,150,.15)' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00C896" strokeWidth="2" strokeLinecap="round">
+                <div className="float-icon" style={{ background: 'rgba(6,182,212,.15)' }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round">
                     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                   </svg>
                 </div>
                 <div>
                   <div className="float-label">Risk Level</div>
-                  <div className="float-val" style={{ color: '#00C896' }}>
+                  <div className="float-val" style={{ color: '#06b6d4' }}>
                     Low Risk
                   </div>
                 </div>
